@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormCard from './FormCard';
 import Result from './Result';
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 
 const data = {};
