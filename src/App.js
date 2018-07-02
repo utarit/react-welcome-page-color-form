@@ -3,6 +3,7 @@ import FormCard from './FormCard';
 import logo from './logo.svg';
 import './App.css';
 
+const data = {};
 
 class App extends Component {
 
@@ -25,6 +26,7 @@ class App extends Component {
         onRemoveButton={this.onRemoveButton}
         onInputChange={this.onInputChange}
         onImageChange={this.onImageChange}
+        onLoadPalette={this.onLoadPalette}
         images={this.state.images}
         key={i}
         id={i}
@@ -43,6 +45,20 @@ class App extends Component {
     e.target.parentNode.parentNode.removeChild(e.target.parentNode);
   }
 
+  onLoadPalette = (backColor, textColor, id) => {
+    const data = this.state.data;
+    if(!data.hasOwnProperty(id)) {
+      data[id] = {};
+    }
+
+    const formData = data[id];
+    formData['b-color'] = backColor;
+    formData['t-color'] = textColor;
+    this.setState({data});
+  }
+
+
+
   onImageChange = (e) => {
     var id = e.target.parentNode.id;
     var preview = document.getElementById(`${id}-img`);
@@ -60,7 +76,6 @@ class App extends Component {
       reader.readAsDataURL(file);
       preview.style.width = '500px';
       this.setState({images});
-      console.log(this.state.images);
     }
   
   }
@@ -79,7 +94,6 @@ class App extends Component {
     formData[name] = value;
 
     this.setState({data});
-    console.log(this.state.images)
   }
 
   onAddButton = () => {
@@ -88,6 +102,7 @@ class App extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state.data);
   }
 
   render() {

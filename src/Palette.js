@@ -1,11 +1,11 @@
 import React from 'react';
 import ImagePalette from 'react-image-palette'
 
-const Palette = ({ image }) =>{
+const Palette = ({ image, onLoad, id }) =>{
     return (
     <ImagePalette key={image} image={image}>
-        {({ backgroundColor, color, alternativeColor }) => (
-        <div style={styles.container}>
+        {({ backgroundColor, color }) => (
+        <div  key={image}  style={styles.container} onLoad={onLoad(backgroundColor, color, id)}>
             <div style={{...styles.subDiv, backgroundColor}}>
             <p>Background Color:</p>
             <p>{backgroundColor}</p>
