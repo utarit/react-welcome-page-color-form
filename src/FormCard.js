@@ -47,15 +47,15 @@ class FormCard extends React.Component {
             <Palette id={formId} onLoad={this.props.onLoadPalette} image={props.images[formId]} /> 
             :
             <div>
-                <input name='b-color' placeholder='Background Color' onChange={props.onInputChange} type='text' />
-                <input name='t-color' placeholder='Text Color' onChange={props.onInputChange} type='text' />
+                <input name='backgroundColor' placeholder='Background Color' onChange={props.onInputChange} type='text' />
+                <input name='textColor' placeholder='Text Color' onChange={props.onInputChange} type='text' />
             </div>
             
         }
          
         <input name='text' placeholder='Text'onChange={props.onInputChange} type='text' />
-        <input name='i-animation' placeholder='Image Animation' onChange={props.onInputChange} type='text' />
-        <input name='t-animation' placeholder='Text Animation'onChange={props.onInputChange} type='text' />
+        <input name='imageAnimation' placeholder='Image Animation' onChange={props.onInputChange} type='text' />
+        <input name='textAnimation' placeholder='Text Animation'onChange={props.onInputChange} type='text' />
       </div>
     )
     }

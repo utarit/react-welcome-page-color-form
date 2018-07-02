@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormCard from './FormCard';
+import Result from './Result';
 import logo from './logo.svg';
 import './App.css';
 
@@ -10,7 +11,7 @@ class App extends Component {
   state = {
     numberOfForm: 1,
     images:{},
-    data: {}
+    showResult: false
   };
 
 
@@ -40,21 +41,18 @@ class App extends Component {
   onRemoveButton = (e) => {
     e.preventDefault();
     const id = e.target.parentNode.id;
-    const data = this.state.data;
     delete data[id];
     e.target.parentNode.parentNode.removeChild(e.target.parentNode);
   }
 
   onLoadPalette = (backColor, textColor, id) => {
-    const data = this.state.data;
     if(!data.hasOwnProperty(id)) {
       data[id] = {};
     }
 
     const formData = data[id];
-    formData['b-color'] = backColor;
-    formData['t-color'] = textColor;
-    this.setState({data});
+    formData['backgroundColor'] = backColor;
+    formData['textColor'] = textColor;
   }
 
 
@@ -81,10 +79,9 @@ class App extends Component {
   }
 
   onInputChange = (e) => {
-    const data = this.state.data;
     const name = e.target.name;
     const value = e.target.value;
-    const id = e.target.parentNode.id;
+    const id = e.target.parentNode.id ? e.target.parentNode.id : e.target.parentNode.parentNode.id;
 
     if(!data.hasOwnProperty(id)) {
       data[id] = {};
@@ -93,16 +90,16 @@ class App extends Component {
     const formData = data[id];
     formData[name] = value;
 
-    this.setState({data});
   }
 
-  onAddButton = () => {
+  onAddButton = (e) => {
+    e.preventDefault()
     this.setState({numberOfForm: this.state.numberOfForm + 1});
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.data);
+    this.setState({showResult: true});
   }
 
   render() {
@@ -113,11 +110,15 @@ class App extends Component {
           <h1 className="App-title">Welcome to Color Picker</h1>
         </header>
           <h1>Form </h1>
-          <button onClick={this.onAddButton}>Add Group</button>
+          
           <form onSubmit={this.onSubmit} id='form'>
             {this.renderFormGroups()}
-            <button className="submit-button">Send!</button>
+            <button onClick={this.onAddButton}>Add Group</button>
+
+            <button style={{marginTop: 50}} className="submit-button">Send!</button>
           </form>
+          
+          {this.state.showResult ? <Result data={data} /> : ''}
       </div>
     );
   }
