@@ -5,6 +5,7 @@ import logo from './logo.svg';
 import './App.css';
 
 const data = {};
+let loopDuration = 1000;
 
 class App extends Component {
 
@@ -38,12 +39,6 @@ class App extends Component {
     return <div>{groups}</div>;
   }
 
-  onRemoveButton = (e) => {
-    e.preventDefault();
-    const id = e.target.parentNode.id;
-    delete data[id];
-    e.target.parentNode.parentNode.removeChild(e.target.parentNode);
-  }
 
   onLoadPalette = (backColor, textColor, id) => {
     if(!data.hasOwnProperty(id)) {
@@ -72,7 +67,7 @@ class App extends Component {
 
     if (file) {
       reader.readAsDataURL(file);
-      preview.style.width = '500px';
+      preview.style.width = '300px';
       this.setState({images});
     }
   
@@ -97,6 +92,11 @@ class App extends Component {
     this.setState({numberOfForm: this.state.numberOfForm + 1});
   }
 
+  onChangeNumber = (e) => {
+    const val = e.target.value;
+    loopDuration = Number(val) ? Number(val) : 1000;
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({showResult: true});
@@ -112,13 +112,17 @@ class App extends Component {
           <h1>Form </h1>
           
           <form onSubmit={this.onSubmit} id='form'>
+          <div>
+            <label>Loop Duration (ms): </label>
+          <input type='number' onChange={this.onChangeNumber} defaultValue='1000' />
+          </div>
             {this.renderFormGroups()}
             <button onClick={this.onAddButton}>Add Group</button>
 
-            <button style={{marginTop: 50}} className="submit-button">Send!</button>
+            <button style={{margin: 50}} className="submit-button">Send!</button>
           </form>
           
-          {this.state.showResult ? <Result data={data} /> : ''}
+          {this.state.showResult ? <Result loop={loopDuration} data={data} /> : ''}
       </div>
     );
   }
