@@ -60,7 +60,7 @@ class App extends Component {
       reader.readAsDataURL(file);
       preview.style.width = '500px';
       this.setState({images});
-      //console.log(this.state.images);
+      console.log(this.state.images);
     }
   
   }
@@ -68,7 +68,7 @@ class App extends Component {
   onInputChange = (e) => {
     const data = this.state.data;
     const name = e.target.name;
-    const value = name === 'image' ? e.target.files[0]: e.target.value;
+    const value = e.target.value;
     const id = e.target.parentNode.id;
 
     if(!data.hasOwnProperty(id)) {
@@ -79,6 +79,7 @@ class App extends Component {
     formData[name] = value;
 
     this.setState({data});
+    console.log(this.state.images)
   }
 
   onAddButton = () => {
